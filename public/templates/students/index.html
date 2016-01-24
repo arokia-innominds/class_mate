@@ -1,0 +1,24 @@
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="#/assignments/new">Create Assignment</a>
+        <h3 class="block">Assignments</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            <tr ng-hide="assignments.length" >
+                <td colspan="5">No Assignments found, Please create one.</td>
+            </tr>
+            <tr ng-show="assignments.length" ng-repeat="assignment in assignments">
+                <td>{{assignment.title}}</td>
+                <td>{{assignment.description}}</td>
+                <td>
+                    <a href="#/assignments/{{assignment.id}}/edit">Edit</a> | <a href="" ng-click="deleteAssignment(assignment.id)">Remove</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

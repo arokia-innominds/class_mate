@@ -1,0 +1,35 @@
+<div class="form-group" ng-class="{'has-error' : submitted && classRoomForm.name.$invalid}">
+  <label class="control-label col-md-3">Name <span class="required">* </span> </label>
+  <div class="col-md-4">
+    <input type="text" name="name" class="form-control" ng-model="classroom.name" required placeholder="Class Name"/>
+  </div>
+  <p ng-show="submitted && classRoomForm.name.$invalid" class="help-block">Class Room is required.</p>
+</div>
+<div class="form-group">
+  <label class="control-label col-md-3"> Description </label>
+  <div class="col-md-4">
+      <textarea name="description" COLS=40 ROWS=6 ng-model="classroom.description"></textarea>
+  </div>
+</div>
+<div class="form-group" ng-class="{'has-error' : submitted && classRoomForm.section.$invalid}">
+  <label class="control-label col-md-3">Section <span class="required">* </span> </label>
+  <div class="col-md-4">
+      <input type="text" name="section" class="form-control" ng-model="classroom.section" required placeholder="Section"/>
+  </div>
+  <p ng-show="submitted && classRoomForm.section.$invalid" class="help-block">Section is required.</p>
+</div>
+<div class="form-group" ng-class="{'has-error' : submitted && classRoomForm.standard.$invalid}">
+  <label class="control-label col-md-3">Standard  <span class="required">* </span></label>
+  <div class="col-md-4">
+    <input type="text" name="standard" class="form-control" ng-model="classroom.standard" required/>
+  </div>
+  <p ng-show="submitted && classRoomForm.standard.$invalid" class="help-block">Standard is required.</p>
+</div>
+
+<div class="form-group">
+  <div class="pull-left">
+    <a class="btn btn-default" href="/"> Back</a>
+    <button type="submit" class="btn btn-primary" ng-click="submitted=true">Submit</button>
+  </div>
+</div>
+

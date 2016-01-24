@@ -1,0 +1,10 @@
+<div >
+  <div id="class-room-list-container">
+    <ul>
+      <li ng-repeat="classroom in classrooms">
+        <h3>{{classroom.name}} <small>({{classroom.section}})</small></h3>
+      </li>
+    </ul>
+    <%=link_to 'Create Class Room', new_class_room_path %>
+  </div>
+</div>

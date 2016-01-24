@@ -1,0 +1,35 @@
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <h3 class="block">Class Room</h3>
+    Name : {{classroom.name}} <br/>
+    Description : {{classroom.description}} <br/>
+    Section : {{classroom.section}} <br/>
+    Standard : {{classroom.standard}}<br/>
+   <a href="#/class_rooms/{{classroom.id}}/assignments/new">Add Assignment</a> | <a href="#/class_rooms/{{classroom.id}}/edit">Edit</a> | <a href="" ng-click="deleteClassRoom(classroom.id)">Remove</a>
+  </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="block">Assignments</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            <tr ng-hide="assignments.length" >
+                <td colspan="5">No Assignments found, Please create one.</td>
+            </tr>
+            <tr ng-show="assignments.length" ng-repeat="assignment in assignments">
+                <td>{{assignment.title}}</td>
+                <td>{{assignment.description}}</td>
+                <td>
+                    <a href="#/class_rooms/{{classroom.id}}/assignments/{{assignment.id}}">Show</a> | <a href="#/class_rooms/{{classroom.id}}/assignments/{{assignment.id}}/edit">Edit</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
