@@ -1,16 +1,13 @@
 <br/>
+<a  ng-click="logout()" data-method='delete'>Logout</a>
 <div class="row">
-  <div class="col-md-12">
-    <h3 class="block">Class Room</h3>
-    Name : {{classroom.name}} <br/>
-    Description : {{classroom.description}} <br/>
-    Section : {{classroom.section}} <br/>
-    Standard : {{classroom.standard}}<br/>
-   <a href="#/">Back</a> | <a href="#/class_rooms/{{classroom.id}}/edit">Edit</a> | <a href="" ng-click="deleteClassRoom(classroom.id)">Remove</a>
+  <div class="col-md-12">   
+    <td>
+      <h3> You have joined the class room <a href="#/class_room/{{classroom.id}}"> {{classroom.name}} </a> </h3>
+    </td>
   </div>
 </div>
 
-<br/>
 <div class="row">
   <div class="col-md-12">
     <h3 class="block">Assignments</h3>
@@ -18,6 +15,8 @@
       <tr>
         <th>Title</th>
         <th>Description</th>
+        <th></th>
+        <th></th>
       </tr>
       <tr ng-hide="assignments.length" >
         <td colspan="5">No Assignments found, Please create one.</td>
@@ -25,6 +24,8 @@
       <tr ng-show="assignments.length" ng-repeat="assignment in assignments">
         <td>{{assignment.title}}</td>
         <td>{{assignment.description}}</td>
+        <td><a href='#/class_rooms/{{classroom.id}}/assignments/{{assignment.id}}/submit'>Submit</a></td>
+        <td><a href='#/class_rooms/{{classroom.id}}/assignments/{{assignment.id}}/submit'>View Submission</a></td>
       </tr>
     </table>
   </div>

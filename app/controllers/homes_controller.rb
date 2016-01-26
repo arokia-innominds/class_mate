@@ -1,8 +1,13 @@
 class HomesController < ApplicationController
 	layout 'class_room'
+    respond_to :html, :json
 
 	def index
-		p current_user
-		render json: current_user.class_room
+		respond_to do |format|
+	      format.json { render :json => current_user.class_room.to_json }
+	      format.html
+	    end
+			# p current_user
+			# render json: current_user.class_room
 	end
 end

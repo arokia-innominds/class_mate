@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users do
+    resource :sessions, only: [:new, :create, :show, :destroy]
+  end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :submissions
   resources :students
@@ -7,13 +9,22 @@ Rails.application.routes.draw do
     member do
       get 'assignments'
     end
-    resources :assignments
+    resources :assignments do
+      member do
+        get 'submit'
+      end
+      member do
+        post 'submission'
+      end
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root to: "homes#index"
+
+  resources :homes
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -68,7 +68,7 @@ class ClassRoomsController < ApplicationController
 
   def assignments
     respond_to do |format|
-      format.json { render :json => @class_room.assignments}
+      format.json { render :json => @class_room.assignments.to_json}
       format.html
     end
   end

@@ -1,7 +1,6 @@
 App.factory('Assignments', ['$resource',function($resource){
-  return $resource('class_rooms/:class_room_id/assignments.json', {},{
-    query: { method: 'GET', isArray: true },
-    create: { method: 'POST', params: {class_room_id: '@class_room_id'} }
+  return $resource('class_rooms/:class_room_id/assignments/:assignment_id/submission.json', {},{
+    submit: { method: 'POST', params: {assignment_id: '@assignment_id'} }
   })
 }]);
 
@@ -31,11 +30,12 @@ App.controller("AssignmentsList", ['$scope', '$http', '$resource', 'Assignments'
   };
 }]);
 
-App.controller("AddAssignment", ['$scope', '$resource', 'Assignments', '$location','$routeParams', function($scope, $resource, Assignments, $location, $routeParams) {
-  $scope.assignment = {}
+App.controller("Submission", ['$scope', '$resource', 'Assignments', 'Assignment', '$location','$routeParams', function($scope, $resource, Assignments, Assignment, $location, $routeParams) {
+  $scope.submission = {assignment_id: $routeParams.id}
+  $scope.assignment = Assignment.get({id: $routeParams.id, class_room_id: $routeParams.classRoomId});
   $scope.save = function () {
     if ($scope.assignmentForm.$valid){
-      Assignments.create({class_room_id: $routeParams.classRoomId},{assignment: $scope.assignment}, function(){
+      Assignments.submit({assignment_id: $routeParams.id, class_room_id: $routeParams.classRoomId},{submission: $scope.submission}, function(){
         $location.path('/');
       }, function(error){
         console.log(error)
@@ -59,21 +59,9 @@ App.controller("AssignmentUpdate", ['$scope', '$resource', 'Assignments', 'Assig
 
 App.config([
   '$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $routeProvider.when('/class_rooms/:classRoomId/assignments',{
-      templateUrl: '/templates/assignments/index.html',
-      controller: 'AssignmentsList'
-    });
-    $routeProvider.when('/class_rooms/:classRoomId/assignments/new', {
-      templateUrl: '/templates/assignments/new.html',
-      controller: 'AddAssignment'
-    });
-    $routeProvider.when('/class_rooms/:classRoomId/assignments/:id/edit', {
-      templateUrl: '/templates/assignments/edit.html',
-      controller: "AssignmentUpdate"
-    });
-    $routeProvider.when('/class_rooms/:classRoomId/assignments/:id', {
+    $routeProvider.when('/class_rooms/:classRoomId/assignments/:id/submit', {
       templateUrl: '/templates/assignments/show.html',
-      controller: "AssignmentUpdate"
+      controller: "Submission"
     });
   }
 ]);

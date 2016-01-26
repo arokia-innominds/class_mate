@@ -34,6 +34,8 @@ gem 'angular-ui-bootstrap-rails'
 gem 'responders', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -46,6 +48,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  #Rspec test cases
+  gem 'rspec-rails', '~> 3.0'
+  #for test data setup 
+  gem "factory_girl_rails", "~> 4.0"
+  # generate fake data 
+  gem 'faker'
 end
 
 group :development do

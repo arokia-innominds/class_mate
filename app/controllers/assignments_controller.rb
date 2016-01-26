@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :submission]
   respond_to :html, :json
   # GET /assignments
   # GET /assignments.json
@@ -20,10 +20,16 @@ class AssignmentsController < ApplicationController
   # GET /assignments/new
   def new
     @assignment = Assignment.new
+    respond_to do |format|
+      format.json { render json: @assignment.as_json}
+    end
   end
 
   # GET /assignments/1/edit
   def edit
+    respond_to do |format|
+      format.json { render json: @assignment.as_json}
+    end
   end
 
   # POST /assignments
@@ -66,6 +72,16 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def submission
+    @submission = Submission.new(submission_params.merge(student_id: current_user.id))
+    if @submission.save
+      respond_to do |format|
+        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
+        format.json { render json: @submission.as_json, status: :ok , notice: 'Submission was successfully created.' }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assignment
@@ -75,5 +91,9 @@ class AssignmentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
       params.require(:assignment).merge(class_room_id: params[:class_room_id]).permit!
+    end
+
+    def submission_params
+      params.require(:submission).permit!
     end
 end

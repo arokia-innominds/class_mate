@@ -1,10 +1,10 @@
 <br/>
 
 <div class="row">
-    <div class="col-md-12">   
-      <td>
-          <a href="#/class_room/{{classroom.id}}">you have joined {{classroom.name}}</a>
-      </td>
-    </div>
+  <div class="col-md-12">   
+    <td>
+      <h3> You have joined the class room <a href="#/class_room/{{classroom.id}}"> {{classroom.name}} </a> </h3>
+    </td>
+  </div>
 </div>
-<a href="#/users/sign_out" data-method='delete'>Logout</a>
+<a  ng-click="logout()" data-method='delete'>Logout</a>
