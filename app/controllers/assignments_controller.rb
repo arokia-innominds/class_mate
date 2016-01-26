@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :submission]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :submission, :show_submission]
   respond_to :html, :json
   # GET /assignments
   # GET /assignments.json
@@ -80,6 +80,13 @@ class AssignmentsController < ApplicationController
         format.json { render json: @submission.as_json, status: :ok , notice: 'Submission was successfully created.' }
       end
     end
+  end
+
+  def show_submission
+    p @submissions = @assignment.submissions.joins(:student)
+     respond_to do |format|
+       format.json { render json: @submissions.as_json, status: :ok}
+     end
   end
 
   private

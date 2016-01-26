@@ -3,6 +3,11 @@ App.factory('Assignments', ['$resource',function($resource){
     submit: { method: 'POST', params: {assignment_id: '@assignment_id'} }
   })
 }]);
+App.factory('Submissions', ['$resource',function($resource){
+  return $resource('class_rooms/:class_room_id/assignments/:assignment_id/show_submission.json', {},{
+    show_submission: {method: 'GET', params: {assignment_id: '@assignment_id'}, isArray: true }
+  })
+}]);
 
 App.factory('Assignment', ['$resource', function($resource){
   return $resource('class_rooms/:class_room_id/assignments/:id.json', {}, {
@@ -14,6 +19,10 @@ App.factory('Assignment', ['$resource', function($resource){
 
 App.controller("AssignmentShow", ['$scope', '$http', '$resource', 'ClassRoom', 'ClassRoomAssignments', '$location', '$routeParams', function($scope, $http, $resource, ClassRoom, ClassRoomAssignments, $location, $routeParams) {
   $scope.assignment = Assignment.get({id: $routeParams.id, class_room_id: $routeParams.classRoomId})
+}]);
+
+App.controller("SubmissionShow", ['$scope', '$http', '$resource', 'Submissions', '$location', '$routeParams', function($scope, $http, $resource, Submissions, $location, $routeParams) {
+  $scope.submissions = Submissions.show_submission({assignment_id: $routeParams.id, class_room_id: $routeParams.classRoomId})
 }]);
 
 App.controller("AssignmentsList", ['$scope', '$http', '$resource', 'Assignments', 'Assignment', '$location','$routeParams', function($scope, $http, $resource, Assignments, Assignment, $location,$routeParams) {
@@ -62,6 +71,10 @@ App.config([
     $routeProvider.when('/class_rooms/:classRoomId/assignments/:id/submit', {
       templateUrl: '/templates/assignments/show.html',
       controller: "Submission"
-    });
+    })
+    .when('/class_rooms/:classRoomId/assignments/:id/show_submission', {
+      templateUrl: '/templates/assignments/show_submission.html',
+      controller: "SubmissionShow"
+  });
   }
 ]);

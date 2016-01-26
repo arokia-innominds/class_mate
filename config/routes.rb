@@ -14,6 +14,9 @@ Rails.application.routes.draw do
         get 'submit'
       end
       member do
+        get 'show_submission'
+      end
+      member do
         post 'submission'
       end
     end
