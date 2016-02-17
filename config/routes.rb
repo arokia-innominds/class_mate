@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users do
-    resource :sessions, only: [:new, :create, :show, :destroy]
-  end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  resources :registrations
+  resources :sessions
   resources :submissions
   resources :students
   resources :class_rooms do
@@ -77,4 +76,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  get 'logout'  => 'sessions#destroy'
 end

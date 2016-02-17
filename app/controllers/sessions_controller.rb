@@ -1,25 +1,21 @@
-class SessionsController < Devise::SessionsController
-# before_filter :configure_sign_in_params, only: [:create]
-
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
-
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
-
-  #DELETE /resource/sign_out
-  def destroy
-    super
+class SessionsController < ApplicationController
+  skip_before_filter :authenticate_user
+  def new
   end
 
-  # protected
+  def create
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect_to root_url, :notice => "Logged in!"
+    else
+      flash.now.alert = "Invalid email or password"
+      render "new"
+    end
+  end
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.for(:sign_in) << :attribute
-  # end
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_url, :notice => "Logged out!"
+  end
 end

@@ -83,7 +83,7 @@ class AssignmentsController < ApplicationController
   end
 
   def show_submission
-    p @submissions = @assignment.submissions.joins(:student)
+     @submissions = @assignment.submissions.joins(:student)
      respond_to do |format|
        format.json { render json: @submissions.as_json, status: :ok}
      end

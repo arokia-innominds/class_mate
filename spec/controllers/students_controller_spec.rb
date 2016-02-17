@@ -31,11 +31,15 @@ RSpec.describe StudentsController, type: :controller do
 
   let(:invalid_attributes) {{name: ''}}
 
+  before do
+    controller.stub(:authenticate_user).and_return(true)
+    controller.stub(:current_user).and_return(user)
+  end
+
   describe "GET #index" do
     it "assigns all students as @students" do
-      student = Student.create! valid_attributes
       get :index, {format: :json}
-      expect(JSON.parse(response.body)[0]['id']).to eq(student.id)
+      expect(JSON.parse(response.body)[0]['id']).to eq(user.id)
     end
   end
 
@@ -97,15 +101,14 @@ RSpec.describe StudentsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) {{first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, name: Faker::Name.name, 
+    email: Faker::Internet.email, password: '12345679', password_confirmation: '12345679', enrolled_no: rand(0..100), class_room_id: class_room.id}}
 
       it "updates the requested student" do
         student = Student.create! valid_attributes
         put :update, {:id => student.to_param, :student => new_attributes}
         student.reload
-        skip("Add assertions for updated state")
+        expect(assigns(:student)).to eq(student)
       end
 
       it "assigns the requested student as @student" do

@@ -3,11 +3,13 @@
 <head>
   <title>Class Mate</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application'%>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<%if current_user%><center><%= link_to 'Logout', logout_path , method: :delete%></center><%end%>
   <div class="container" ng-view>
+
     <%= yield %>
   </div>
 

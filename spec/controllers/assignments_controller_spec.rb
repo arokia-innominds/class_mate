@@ -34,7 +34,8 @@ RSpec.describe AssignmentsController, type: :controller do
 
 
   before do
-    sign_in user
+    controller.stub(:authenticate_user).and_return(true)
+    controller.stub(:current_user).and_return(user)
   end
 
   describe "GET #index" do
@@ -150,6 +151,30 @@ RSpec.describe AssignmentsController, type: :controller do
       assignment = Assignment.create! valid_attributes
       delete :destroy, {:id => assignment.to_param, class_room_id: class_room.id, format: :json}
       expect(response.status).to eq(204)
+    end
+  end
+
+  describe 'POST submission' do
+    it 'submit the assignments' do
+      assignment=Assignment.create! valid_attributes
+      post :submission ,{id: assignment.id, class_room_id: class_room.id, submission: {description: 'test'}}
+      expect(response.status).to eq 302
+    end
+  end
+
+  describe 'GET show_submission' do
+    it 'display  the submissions' do
+      assignment=Assignment.create! valid_attributes
+      get :show_submission, {id: assignment.id, class_room_id: class_room.id, format: :json}
+      expect(response.status).to eq 200
+    end
+  end
+
+  describe '#set assignment' do
+    it 'should call the before action' do
+      assignment = Assignment.create! valid_attributes
+      expect(controller).to receive(:set_assignment).and_call_original 
+      get :show, {:id => assignment.to_param, class_room_id: class_room.id, format: :json}     
     end
   end
 

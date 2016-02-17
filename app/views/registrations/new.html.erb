@@ -1,7 +1,16 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource.becomes(Student), as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<%= form_for @student do |f| %>
+ <% if @student.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @student.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :email %><br />
@@ -45,4 +54,3 @@
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>

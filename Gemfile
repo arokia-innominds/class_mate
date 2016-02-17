@@ -8,7 +8,7 @@ gem 'mysql2', '~> 0.3.18'
 
 gem 'rails_admin', '~> 0.7.0'
 
-gem 'devise'
+gem 'bcrypt-ruby', :require => "bcrypt"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -54,6 +54,9 @@ group :development, :test do
   gem "factory_girl_rails", "~> 4.0"
   # generate fake data 
   gem 'faker'
+
+  gem 'shoulda-matchers', "3.0.0"
+  gem 'simplecov', :require => false
 end
 
 group :development do
@@ -63,4 +66,5 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
+
 
